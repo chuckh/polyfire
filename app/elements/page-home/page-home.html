@@ -1,0 +1,51 @@
+<!-- <link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html"> -->
+<!-- <link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html"> -->
+<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown/paper-dropdown.html">
+
+<link rel="import" href="../page-base/page-base.html">
+
+<polymer-element name="page-home" attributes="" extends="page-base">
+  <template>
+    <link rel="stylesheet" href="page-home.css">
+
+    <core-media-query query="min-width: 1280px" queryMatches="{{largeScreen}}" on-core-media-change="{{resized}}"></core-media-query>
+
+    <!-- Page -->
+    <core-header-panel id="apr_header_panel_home" drawer mode="seamed" fit>
+
+      <!-- Header -->
+      <core-toolbar >
+        <div horizontal layout center id="header_menu_title">
+          <div id="header_title">{{navTitle}}  <span style="font-size:0.8em">({{currentEnv}})</span></div>
+        </div>
+
+        <div class="toolbar-flex" flex>&nbsp;</div>
+
+      </core-toolbar>
+
+      <!-- Body -->
+      <div id="main_container" fit>
+
+        <!-- <app-login id="app_login" name="applogin"></app-login> -->
+
+      </div>
+      <!-- Body END -->
+
+    </core-header-panel>
+
+  </template>
+
+  <script>
+  (function() {
+    Polymer({
+      currentEnv: "",
+
+      ready: function() {
+        console.log("page-home ready");
+      },
+
+    });
+  })();
+</script>
+</polymer-element>
