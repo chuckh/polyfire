@@ -66,7 +66,6 @@ module.exports = function (grunt) {
     // Compiles Sass to CSS and generates necessary files if requested
     sass: {
       options: {
-        sourcemap: true,
         loadPath: 'bower_components'
       },
       dist: {
@@ -194,7 +193,9 @@ module.exports = function (grunt) {
     vulcanize: {
       default: {
         options: {
-          strip: true
+          strip: true,
+          csp: true,
+          inline:true
         },
         files: {
           '<%= yeoman.dist %>/elements/elements.vulcanized.html': [
