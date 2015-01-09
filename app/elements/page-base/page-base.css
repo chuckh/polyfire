@@ -1,0 +1,97 @@
+@import '../styles/base';
+
+:host {
+  display: block;
+}
+
+#main_container {
+  background-color: white;
+
+}
+
+#drawer_container {
+  z-index: 10;
+  background-color: white;
+  -webkit-transition: width 200ms;
+  -moz-transition: width 200ms;
+  -o-transition: width 200ms;
+  transition: width 200ms;
+  overflow-x: hidden;
+}
+
+.drawer-open {
+  // display: block;
+  color: black;
+  width: 256px;
+}
+.drawer-closed {
+  // display: none;
+  color: white;
+  width: 0px;
+}
+
+#drawer_transition {
+  -webkit-transition: display 200ms;
+  -moz-transition: display 200ms;
+  -o-transition: display 200ms;
+  transition: display 200ms;
+}
+
+#content_container {
+  background-color: yellow;
+  z-index: 1;
+  -webkit-transition: left 200ms;
+  -moz-transition: left 200ms;
+  -o-transition: left 200ms;
+  transition: left 200ms;
+}
+
+.overlay-drawer {
+  left: 0px !important;
+}
+.push-drawer {
+  left: 256px !important;
+}
+
+
+core-menu a {
+  color: $dark-text;
+}
+.content {
+  background-color: #FFFFFF;
+}
+core-toolbar {
+  color: $light-text;
+  background-color: $primary-color;
+
+}
+core-toolbar [icon="menu"] {
+  margin-left: -6px;
+}
+#menuBtn {
+  margin-right: 0;
+}
+core-toolbar [icon="more-vert"] {
+  padding-right: 0;
+}
+
+#drawer_title a:link,
+#drawer_title a:visited {
+  text-decoration: none;
+  color: white;
+}
+
+#drawer_title a:hover {
+  text-decoration: underline;
+  // color: yellow;
+}
+
+#drawer_title {
+  color: white;
+  margin-top: -4px;
+  margin-left: 6px;
+}
+
+.toolbar-flex {
+  height: 48px;
+}

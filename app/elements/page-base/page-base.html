@@ -1,0 +1,123 @@
+<link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../../bower_components/core-medie-query/core-medie-query.html">
+<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<polymer-element name="page-base" attributes=""  on-page-picker-close-drawer="{{closeDrawer}}">
+  <template>
+    <link rel="stylesheet" href="page-base.css">
+
+    <core-media-query query="min-width: 1280px" queryMatches="{{largeScreen}}" on-core-media-change="{{resized}}"></core-media-query>
+
+    <!-- Page -->
+    <core-header-panel id="apr_header_panel" drawer mode="seamed"fit> <!-- mode="seamed" -->
+
+      <!-- Header -->
+      <core-toolbar >
+        <div horizontal layout center id="header_menu_title">
+          <paper-icon-button icon="menu" on-tap="{{toggleDrawer}}"></paper-icon-button>
+
+          <div id="drawer_title"><a href="/#!/select">{{navTitle}} <span style="font-size:0.8em">({{currentEnv}})</span></a></div>
+
+        </div>
+
+        <div class="toolbar-flex" on-tap="{{closeDrawer}}" flex>&nbsp;</div>
+
+        <content select=".header-tool-bar"></content>
+
+      </core-toolbar>
+
+      <!-- Body -->
+      <div id="main_container" fit>
+
+        <!-- Drawer -->
+        <div id="drawer_container" class="{{drawerContainerClass}}" fit>
+          <div id="drawer_transition" hidden?="{{!drawerOpen}}">
+            <content select=".drawer-area"></content>
+          </div>
+
+        </div>
+
+        <!-- Content  -->
+        <div id="content_container" class="{{contentContainerClass}}"  on-tap="{{closeDrawer}}" fit>
+          <content select=".content-area"></content>
+        </div>
+
+      </div>
+      <!-- Body END -->
+
+    </core-header-panel>
+
+
+  </template>
+  <script>
+    (function () {
+
+      Polymer({
+        drawerOpen: false,
+        drawerContainerClass: "drawer-closed",
+        contentContainerClass:"push-drawer",
+        currentEnv: "",
+
+        ready: function() {
+          this.globals = this.$.globals;  // Global Variables
+          this.urlPrefix = this.globals.urlPrefix;
+          this.navTitle = this.globals.navTitle;
+          this.currentEnv = this.globals.env;
+          // console.log("page-base ready");
+        },
+
+        resized: function() {
+          // console.log("resized largeScreen:", this.largeScreen);
+          this.resizePage();
+        },
+        resizePage:  function() {
+          if (this.largeScreen) {
+            this.drawerOpen = true;
+            this.drawerContainerClass = "drawer-open";
+            this.contentContainerClass = "push-drawer";
+            // this.$.content_container.disabled = true;
+          } else {
+            this.drawerOpen = false;
+            this.drawerContainerClass = "drawer-closed";
+            this.contentContainerClass = "overlay-drawer";
+            // this.$.content_container.disabled = false;
+          }
+          // console.log("resizePage:", this.drawerOpen );
+        },
+
+        toggleDrawer: function() {
+          if (this.drawerOpen) {
+            this.drawerOpen = false;
+            this.contentContainerClass = "overlay-drawer"
+            this.drawerContainerClass = "drawer-closed";
+            // this.$.content_container.disabled = false;
+            // this.$.content_container.class.value = "no-drawer";
+          } else {
+            this.drawerOpen = true;
+            this.drawerContainerClass = "drawer-open";
+            // this.$.content_container.disabled = true;
+            if (this.largeScreen) {
+              this.contentContainerClass = "push-drawer";
+            } else {
+              this.contentContainerClass = "overlay-drawer";
+            }
+          }
+        },
+
+        closeDrawer: function(event, detail, sender) {
+          // console.log("closeDrawer:", this.drawerOpen );
+          if (this.drawerOpen && !this.largeScreen) {
+            this.drawerOpen = false;
+            this.drawerContainerClass = "drawer-closed";
+            // this.$.content_container.disabled = false;
+          }
+        },
+
+
+      });
+
+    })();
+  </script>
+</polymer-element>
