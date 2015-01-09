@@ -12,8 +12,9 @@ Polyfire is a Google Polymer and Firebase Start App
 
 <h2>Install</h2>
 1. git clone ...
-2. bower install
-3.  
+2. npm install
+3. bower install
+4.  
 
 <br>
 

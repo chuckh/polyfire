@@ -1,16 +1,16 @@
-<!-- <link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html"> -->
-<!-- <link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html"> -->
+<link rel="import" href="../../bower_components/core-media-query/core-media-query.html">
+<link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
 <link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown/paper-dropdown.html">
 
-<link rel="import" href="../page-base/page-base.html">
+<!-- <link rel="import" href="../page-base/page-base.html"> -->
 
-<polymer-element name="page-home" attributes="" extends="page-base">
+<polymer-element name="page-home" attributes="">
   <template>
     <link rel="stylesheet" href="page-home.css">
 
     <core-media-query query="min-width: 1280px" queryMatches="{{largeScreen}}" on-core-media-change="{{resized}}"></core-media-query>
-
     <!-- Page -->
     <core-header-panel id="apr_header_panel_home" drawer mode="seamed" fit>
 
@@ -26,6 +26,7 @@
 
       <!-- Body -->
       <div id="main_container" fit>
+        HOME PAGE
 
         <!-- <app-login id="app_login" name="applogin"></app-login> -->
 
@@ -39,7 +40,8 @@
   <script>
   (function() {
     Polymer({
-      currentEnv: "",
+      currentEnv: "dev",
+      navTitle: "Polytube",
 
       ready: function() {
         console.log("page-home ready");

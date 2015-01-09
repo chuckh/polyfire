@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
-<link rel="import" href="../../bower_components/core-medie-query/core-medie-query.html">
+<link rel="import" href="../../bower_components/core-media-query/core-media-query.html">
 <link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
 <link rel="import" href="../../bower_components/core-menu/core-menu.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
@@ -11,7 +11,7 @@
     <core-media-query query="min-width: 1280px" queryMatches="{{largeScreen}}" on-core-media-change="{{resized}}"></core-media-query>
 
     <!-- Page -->
-    <core-header-panel id="apr_header_panel" drawer mode="seamed"fit> <!-- mode="seamed" -->
+    <core-header-panel id="apr_header_panel" drawer mode="seamed" fit> <!-- mode="seamed" -->
 
       <!-- Header -->
       <core-toolbar >
@@ -61,11 +61,11 @@
         currentEnv: "",
 
         ready: function() {
-          this.globals = this.$.globals;  // Global Variables
-          this.urlPrefix = this.globals.urlPrefix;
-          this.navTitle = this.globals.navTitle;
-          this.currentEnv = this.globals.env;
-          // console.log("page-base ready");
+          // this.globals = this.$.globals;  // Global Variables
+          // this.urlPrefix = this.globals.urlPrefix;
+          // this.navTitle = this.globals.navTitle;
+          // this.currentEnv = this.globals.env;
+          console.log("page-base ready");
         },
 
         resized: function() {
