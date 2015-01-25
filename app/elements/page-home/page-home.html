@@ -8,7 +8,8 @@
 <link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown/paper-dropdown.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../../components/google-youtube-video-wall/google-youtube-video-wall.html">
+<link rel="import" href="../pf-youtube-wall/pf-youtube-wall.html">
+<!-- <link rel="import" href="../../components/google-youtube-video-wall/google-youtube-video-wall.html"> -->
 <!-- git clone https://github.com/chuckh/google-youtube-video-wall.git app/components/google-youtube-video-wall -->
 <!-- <link rel="import" href="../pf-youtube-wall/pf-youtube-wall.html"> -->
 <!-- <link rel="import" href="../page-base/page-base.html"> -->
@@ -82,13 +83,13 @@
         <!-- Content  -->
         <div id="content_container" class="{{contentContainerClass}}"  on-tap="{{closeDrawer}}"  fit>
           <!-- <content select=".content-area"></content> -->
-          <google-youtube-video-wall id="youtube_wall" fit cross-fade
+          <pf-youtube-wall id="youtube_wall" fit cross-fade
             apiKey="AIzaSyBOC-_V1rGSIwVpNNY99paA2-31WCFslWs"
             wallTitle="{{currentWallTitle}}"
             playlistId="{{currentPlaylistId}}"
             hideToolbar
             playerWindow>
-          </google-youtube-video-wall>
+          </pf-youtube-wall>
 
           <!-- <pf-youtube-wall id="youtube_wall" fit cross-fade
             apiKey="AIzaSyBOC-_V1rGSIwVpNNY99paA2-31WCFslWs"
@@ -100,13 +101,13 @@
 
 
 
-        <!-- <google-youtube-video-wall fit
+        <!-- <pf-youtube-wall fit
           apiKey="AIzaSyBOC-_V1rGSIwVpNNY99paA2-31WCFslWs"
           wallTitle="Google Developers Videos"
           channelId="UC_x5XG1OV2P6uZZ5FSM9Ttw"
           q="polymer"
           showSearch>
-        </google-youtube-video-wall> -->
+        </pf-youtube-wall> -->
 
       </div>
       <!-- Body END -->
@@ -183,7 +184,7 @@
 
       handleYouTubeApiError: function(e) {
         if (e.detail.response.indexOf('keyInvalid') >= 0) {
-          this._apiError = 'Missing or invalid API key. Please see the <google-youtube-video-wall> ' +
+          this._apiError = 'Missing or invalid API key. Please see the <pf-youtube-wall> ' +
           'documentation for information on setting the "apiKey" property to a valid value.'
         } else {
           this._apiError = e.detail.response;
