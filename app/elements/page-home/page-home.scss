@@ -1,0 +1,59 @@
+@import '../styles/base';
+
+:host {
+  display: block;
+}
+
+#drawer_container {
+  z-index: 10;
+  background-color: white;
+  -webkit-transition: width 200ms;
+  -moz-transition: width 200ms;
+  -o-transition: width 200ms;
+  transition: width 200ms;
+  overflow-x: hidden;
+}
+
+.drawer-open {
+  // display: block;
+  color: black;
+  width: 256px;
+}
+.drawer-closed {
+  // display: none;
+  color: white;
+  width: 0px;
+}
+
+#drawer_transition {
+  -webkit-transition: display 200ms;
+  -moz-transition: display 200ms;
+  -o-transition: display 200ms;
+  transition: display 200ms;
+}
+
+core-menu, paper-menu-button, paper-item {
+  color: $dark-text;
+}
+paper-item {
+  // margin-left: -5px;
+}
+core-icon {
+  margin-left: -10px;
+}
+.menu-item-title {
+  vertical-align:middle;
+  padding-left:10px
+}
+
+paper-input /deep/ input {
+  color: #ffffff;
+}
+
+paper-input /deep/ #focusedUnderline {
+  background-color: #a2f78d;
+}
+
+#youtube_wall > core-toolbar {
+  display: none;
+}

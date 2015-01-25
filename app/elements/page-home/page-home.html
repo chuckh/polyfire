@@ -1,9 +1,16 @@
 <link rel="import" href="../../bower_components/core-media-query/core-media-query.html">
 <link rel="import" href="../../bower_components/core-header-panel/core-header-panel.html">
 <link rel="import" href="../../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../../bower_components/core-item/core-item.html">
+<link rel="import" href="../../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../../bower_components/core-icon/core-icon.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown/paper-dropdown.html">
-
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../components/google-youtube-video-wall/google-youtube-video-wall.html">
+<!-- git clone https://github.com/chuckh/google-youtube-video-wall.git app/components/google-youtube-video-wall -->
+<!-- <link rel="import" href="../pf-youtube-wall/pf-youtube-wall.html"> -->
 <!-- <link rel="import" href="../page-base/page-base.html"> -->
 
 <polymer-element name="page-home" attributes="">
@@ -11,24 +18,95 @@
     <link rel="stylesheet" href="page-home.css">
 
     <core-media-query query="min-width: 1280px" queryMatches="{{largeScreen}}" on-core-media-change="{{resized}}"></core-media-query>
+    <core-media-query query="max-width: {{narrowWidth}}" queryMatches="{{narrow}}"></core-media-query>
+    <core-media-query query="max-width: {{veryNarrowWidth}}" queryMatches="{{veryNarrow}}"></core-media-query>
+
+    <!-- url="https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=PL3485902CC4FB6C67%2C+PLCD0445C57F2B7F41%2C+PLGBuKfnErZlAkaUUy57-mR97f8SBgMNHh%2CPLGBuKfnErZlCkRRgt06em8nbXvcV5Sae7&key=AIzaSyBOC-_V1rGSIwVpNNY99paA2-31WCFslWs" -->
+
+    <core-ajax id="ajax_youtube_playlist" auto
+      url="https://www.googleapis.com/youtube/v3/playlists?part=snippet&id={{myPlaylistsIds}}&key=AIzaSyBOC-_V1rGSIwVpNNY99paA2-31WCFslWs"
+      response="{{playlists}}"
+      handleAs="json"
+      on-core-response="{{handleYouTubeApiResponse}}"
+      on-core-error="{{handleYouTubeApiError}}">
+    </core-ajax>
+
     <!-- Page -->
     <core-header-panel id="apr_header_panel_home" drawer mode="seamed" fit>
 
       <!-- Header -->
       <core-toolbar >
-        <div horizontal layout center id="header_menu_title">
-          <div id="header_title">{{navTitle}}  <span style="font-size:0.8em">({{currentEnv}})</span></div>
+        <div horizontal layout center id="header_menu_title" flex>
+          <!-- <div id="header_title">{{navTitle}}  <span style="font-size:0.8em">({{currentEnv}})</span></div> -->
+          <paper-icon-button icon="menu" on-tap="{{toggleDrawer}}"></paper-icon-button>
+
+          <div id="drawer_title">{{navTitle}} <span style="font-size:0.8em">({{currentEnv}})</span></div>
+          <div id="header_title" flex>{{currentWallTitle}}</div>
+
+          <core-icon icon="search" class="{{ {bottom: narrow} | tokenList }}"></core-icon>
+          <paper-input class="{{ {bottom: narrow} | tokenList }}"
+            placeholder="Search for..."
+            value="{{q}}">
+          </paper-input>
         </div>
 
-        <div class="toolbar-flex" flex>&nbsp;</div>
+        <!-- <div class="toolbar-flex" flex>&nbsp;</div> -->
 
       </core-toolbar>
 
       <!-- Body -->
       <div id="main_container" fit>
-        HOME PAGE
 
-        <!-- <app-login id="app_login" name="applogin"></app-login> -->
+        <!-- Drawer -->
+        <div id="drawer_container" class="{{drawerContainerClass}}" fit>
+          <div id="drawer_transition" hidden?="{{!drawerOpen}}">
+            <!-- <content select=".drawer-area"></content> -->
+            <h3>Playlist Lists</h3>
+            <hr>
+            <core-menu id="playlistPickerCoreMenu" on-core-select="{{onPlaylistPickerCoreSelect}}">
+              <template repeat="{{playlist in playlists.items}}">
+              <!-- <core-item on-tap="{{onPlaylistSelect}}" title="{{playlist.snippet.title}}" playlistId="{{playlist.id}}">{{playlist.snippet.title}} -- {{playlist.id}}<core-item> -->
+
+                  <paper-item  noink on-tap="{{onPlaylistSelect}}" title="{{playlist.snippet.title}}" playlistId="{{playlist.id}}"> <!-- on-click="{{loadSelectView}}" on-click="{{navigate}}"-->
+                      <core-icon icon="view-module"></core-icon>
+                      <span class="menu-item-title">{{playlist.snippet.title}}</span>
+                  </paper-item>
+
+              </template>
+            </core-menu>
+          </div>
+
+
+        </div>
+
+        <!-- Content  -->
+        <div id="content_container" class="{{contentContainerClass}}"  on-tap="{{closeDrawer}}"  fit>
+          <!-- <content select=".content-area"></content> -->
+          <google-youtube-video-wall id="youtube_wall" fit cross-fade
+            apiKey="AIzaSyBOC-_V1rGSIwVpNNY99paA2-31WCFslWs"
+            wallTitle="{{currentWallTitle}}"
+            playlistId="{{currentPlaylistId}}"
+            hideToolbar
+            playerWindow>
+          </google-youtube-video-wall>
+
+          <!-- <pf-youtube-wall id="youtube_wall" fit cross-fade
+            apiKey="AIzaSyBOC-_V1rGSIwVpNNY99paA2-31WCFslWs"
+            wallTitle="{{currentWallTitle}}"
+            playlistId="{{currentPlaylistId}}">
+          </pf-youtube-wall> -->
+
+        </div>
+
+
+
+        <!-- <google-youtube-video-wall fit
+          apiKey="AIzaSyBOC-_V1rGSIwVpNNY99paA2-31WCFslWs"
+          wallTitle="Google Developers Videos"
+          channelId="UC_x5XG1OV2P6uZZ5FSM9Ttw"
+          q="polymer"
+          showSearch>
+        </google-youtube-video-wall> -->
 
       </div>
       <!-- Body END -->
@@ -37,14 +115,89 @@
 
   </template>
 
+
+
+
   <script>
   (function() {
     Polymer({
       currentEnv: "dev",
       navTitle: "Polytube",
+      drawerOpen: true,
+      drawerContainerClass: "drawer-closed",
+      contentContainerClass:"push-drawer",
+      currentWallTitle: "Greatest hits of the 70's",
+      currentPlaylistId: "PLGBuKfnErZlAkaUUy57-mR97f8SBgMNHh",
+      myPlaylistsIds: "",
 
       ready: function() {
-        console.log("page-home ready");
+          this.myPlaylistsIds = "PLGBuKfnErZlCkRRgt06em8nbXvcV5Sae7" +
+          "%2C+PLGBuKfnErZlAkaUUy57-mR97f8SBgMNHh" +
+          "%2C+PLCD0445C57F2B7F41" +
+          "%2C+PL7DA3D097D6FDBC02" +
+          "%2C+PL3485902CC4FB6C67" +
+          "%2C+PLCB71812AF6F71DA5" +
+          "%2C+PL56FB41169D817AE5" +
+          "%2C+PLu14It28GUY3TlVNnFeDIMNUDcCWObeqh" +
+          "%2C+PL2C862A840FF3B8E2" +
+          "%2C+PLhGe8UxzOI2O5HEoiPuKOurEeECtl-0N-"+
+          "%2C+PL-4U2d6ASRHmJY4sZscmFPKSncHdP3hBz";
+
+
+        console.log("page-home ready", window.location.href);
+      },
+
+      toggleDrawer: function() {
+        if (this.drawerOpen) {
+          this.drawerOpen = false;
+          this.contentContainerClass = "overlay-drawer"
+          this.drawerContainerClass = "drawer-closed";
+          // this.$.content_container.disabled = false;
+          // this.$.content_container.class.value = "no-drawer";
+        } else {
+          this.drawerOpen = true;
+          this.drawerContainerClass = "drawer-open";
+          // this.$.content_container.disabled = true;
+          if (this.largeScreen) {
+            this.contentContainerClass = "push-drawer";
+          } else {
+            this.contentContainerClass = "overlay-drawer";
+          }
+        }
+      },
+
+      closeDrawer: function(event, detail, sender) {
+        // console.log("closeDrawer:", this.drawerOpen );
+        if (this.drawerOpen && !this.largeScreen) {
+          this.drawerOpen = false;
+          this.drawerContainerClass = "drawer-closed";
+          // this.$.content_container.disabled = false;
+        }
+      },
+
+      handleYouTubeApiResponse: function(e) {
+        this._apiError = '';
+        var response = e.detail.response;
+        console.log("handleYouTubeApiResponse: ",this.playlists);
+      },
+
+      handleYouTubeApiError: function(e) {
+        if (e.detail.response.indexOf('keyInvalid') >= 0) {
+          this._apiError = 'Missing or invalid API key. Please see the <google-youtube-video-wall> ' +
+          'documentation for information on setting the "apiKey" property to a valid value.'
+        } else {
+          this._apiError = e.detail.response;
+        }
+      },
+
+      onPlaylistSelect: function(e, detail, sender) {
+        this.currentPlaylistId = sender.attributes.playlistId.value;
+        this.currentWallTitle = sender.attributes.title.value;
+        // if (this.drawerOpen && !this.largeScreen) {
+          this.drawerOpen = false;
+          this.drawerContainerClass = "drawer-closed";
+        // }
+        console.log("onPlaylistSelect: ", this.currentPlaylistId, this.$.youtube_wall);
       },
 
     });
