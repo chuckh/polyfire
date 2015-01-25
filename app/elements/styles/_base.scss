@@ -10,3 +10,49 @@
 paper-fab {
   background-color: $accent-color;
 }
+
+// Pages css for page-home, page-xxx
+#main_container {
+  background-color: white;
+}
+
+#content_container {
+  background-color: yellow;
+  z-index: 1;
+  -webkit-transition: left 200ms;
+  -moz-transition: left 200ms;
+  -o-transition: left 200ms;
+  transition: left 200ms;
+}
+
+core-menu a {
+  color: $dark-text;
+}
+.content {
+  background-color: #FFFFFF;
+}
+core-toolbar {
+  color: $light-text;
+  background-color: $primary-color;
+
+}
+core-toolbar [icon="menu"] {
+  margin-left: -6px;
+}
+#menuBtn {
+  margin-right: 0;
+}
+core-toolbar [icon="more-vert"] {
+  padding-right: 0;
+}
+
+#header_title {
+  // width: 100%;
+  margin-top: 0px;
+  // margin-left: 30px;
+  // margin-right: 30px;
+  text-align: center;
+}
+.toolbar-flex {
+  height: 48px;
+}
